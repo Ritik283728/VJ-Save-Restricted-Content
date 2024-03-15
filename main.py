@@ -1,6 +1,6 @@
 import pyrogram
 from pyrogram import Client, filters
-from pyrogram.errors import UserAlreadyParticipant, InviteHashExpired, UsernameNotOccupied
+from pyrogram.errors import UserAlreadyParticipant, InviteHashExpired, UsernameNotOccupied, MessageEmpty
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 import time
@@ -57,7 +57,7 @@ def upstatus(statusfile,message):
 
 
 # progress writter
-def progress(current, total, message, type):
+def a(current, total, message, type):
 	with open(f'{message.id}{type}status.txt',"w") as fileup:
 		fileup.write(f"{current * 100 / total:.1f}%")
 
@@ -66,7 +66,7 @@ def progress(current, total, message, type):
 @bot.on_message(filters.command(["start"]))
 def send_start(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
 	bot.send_message(message.chat.id, f"**__👋 Hi** **{message.from_user.mention}**, **I am Save Restricted Bot, I can send you restricted content by it's post link__**\n\n{USAGE}",
-	reply_markup=InlineKeyboardMarkup([[ InlineKeyboardButton("🌐 Update Channel", url="https://t.me/VJ_Botz")]]), reply_to_message_id=message.id)
+	#reply_markup=InlineKeyboardMarkup([[ InlineKeyboardButton("🌐 Update Channel", url="https://t.me/VJ_Botz")]]), reply_to_message_id=message.id)
 
 
 @bot.on_message(filters.text)
@@ -84,12 +84,13 @@ def save(client: pyrogram.client.Client, message: pyrogram.types.messages_and_me
 			try: acc.join_chat(message.text)
 			except Exception as e: 
 				bot.send_message(message.chat.id,f"**Error** : __{e}__", reply_to_message_id=message.id)
+				return
 			bot.send_message(message.chat.id,"**Chat Joined**", reply_to_message_id=message.id)
 		except UserAlreadyParticipant:
 			bot.send_message(message.chat.id,"**Chat alredy Joined**", reply_to_message_id=message.id)
 		except InviteHashExpired:
 			bot.send_message(message.chat.id,"**Invalid Link**", reply_to_message_id=message.id)
-				return
+				
 	# getting message
 	elif "https://t.me/" in message.text:
 
@@ -109,7 +110,15 @@ def save(client: pyrogram.client.Client, message: pyrogram.types.messages_and_me
 					bot.send_message(message.chat.id,f"**String Session is not Set**", reply_to_message_id=message.id)
 					return
 				
-				handle_private(message,chatid,msgid)
+				try:
+					handle_private(message,chatid,msgid)
+				except MessageEmpty as e:
+					bot.send_message(message.chat.id,f"**Caught a message empty exception** : __{e}__", reply_to_message_id=message.id)
+					continue
+				except pyrogram.errors.exceptions.TelegramError as e:
+					bot.send_message(message.chat.id,f"**Caught a TelegramErrorException** : __{e}__", reply_to_message_id=message.id)
+					continue
+				#handle_private(message,chatid,msgid)
 				# try: handle_private(message,chatid,msgid)
 				# except Exception as e: bot.send_message(message.chat.id,f"**Error** : __{e}__", reply_to_message_id=message.id)
 			
@@ -246,35 +255,35 @@ def get_message_type(msg: pyrogram.types.messages_and_media.message.Message):
 	except: pass
 
 
-USAGE = """**FOR PUBLIC CHATS**
+# USAGE = """**FOR PUBLIC CHATS**
 
-**__just send post/s link__**
+# **__just send post/s link__**
 
-**FOR PRIVATE CHATS**
+# **FOR PRIVATE CHATS**
 
-**__first send invite link of the chat (unnecessary if the account of string session already member of the chat)
-then send post/s link__**
+# **__first send invite link of the chat (unnecessary if the account of string session already member of the chat)
+# then send post/s link__**
 
-**FOR BOT CHATS**
+# **FOR BOT CHATS**
 
-**__send link with** '/b/', **bot's username and message id, you might want to install some unofficial client to get the id like below__**
+# **__send link with** '/b/', **bot's username and message id, you might want to install some unofficial client to get the id like below__**
 
-```
-https://t.me/b/botusername/4321
-```
+# ```
+# https://t.me/b/botusername/4321
+# ```
 
-**MULTI POSTS**
+# **MULTI POSTS**
 
-**__send public/private posts link as explained above with formate "from - to" to send multiple messages like below__**
+# **__send public/private posts link as explained above with formate "from - to" to send multiple messages like below__**
 
-```
-https://t.me/xxxx/1001-1010
+# ```
+# https://t.me/xxxx/1001-1010
 
-https://t.me/c/xxxx/101 - 120
-```
+# https://t.me/c/xxxx/101 - 120
+# ```
 
-**__note that space in between doesn't matter__**
-"""
+# **__note that space in between doesn't matter__**
+# """
 
 
 # infinty polling
