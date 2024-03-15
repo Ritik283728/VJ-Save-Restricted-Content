@@ -65,8 +65,8 @@ def progress(current, total, message, type):
 # start command
 @bot.on_message(filters.command(["start"]))
 def send_start(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
-	bot.send_message(message.chat.id, f"__👋 Hi **{message.from_user.mention}**, I am Save Restricted Bot, I can send you restricted content by it's post link__\n\n{USAGE}",
-	reply_markup=InlineKeyboardMarkup([[ InlineKeyboardButton("🌐 Google", url="https://www.google.com/")]]), reply_to_message_id=message.id)
+	bot.send_message(message.chat.id, f"__👋 Hi **{message.from_user.mention}**,"\n" I am Save Restricted Bot, I can send you restricted content by it's post link__\n\n{USAGE}",
+	reply_markup=InlineKeyboardMarkup([[ InlineKeyboardButton("🌐", url="https://t.me/Vzzzzboooot3bot")]]), reply_to_message_id=message.id)
 
 
 @bot.on_message(filters.text)
@@ -113,10 +113,8 @@ def save(client: pyrogram.client.Client, message: pyrogram.types.messages_and_me
 				try:
 						handle_private(message,chatid,msgid)
 				except MessageEmpty as e:
-						bot.send_message(message.chat.id,f"**Caught a message empty exception** : __{e}__", reply_to_message_id=message.id)
 						continue
 				except pyrogram.errors.exceptions.TelegramError as e:
-						bot.send_message(message.chat.id,f"**Caught a TelegramErrorException** : __{e}__", reply_to_message_id=message.id)
 						continue				
 			
 			# bot
@@ -260,28 +258,6 @@ __just send post/s link__
 
 __first send invite link of the chat (unnecessary if the account of string session already member of the chat)
 then send post/s link__
-
-# **FOR BOT CHATS**
-
-# __send link with '/b/', bot's username and message id, you might want to install some unofficial client to get the id like below__
-
-# ```
-# https://t.me/b/botusername/4321
-# ```
-
-# **MULTI POSTS**
-
-# __send public/private posts link as explained above with formate "from - to" to send multiple messages like below__
-
-# ```
-# https://t.me/xxxx/1001-1010
-
-# https://t.me/c/xxxx/101 - 120
-# ```
-
-# __note that space in between doesn't matter__
-# """
-
 
 # infinty polling
 bot.run()
