@@ -94,11 +94,8 @@ def save(client: pyrogram.client.Client, message: pyrogram.types.messages_and_me
 	# getting message
 	elif "https://t.me/" in message.text:
 
-                if '?single' not in link:
-                    return await client.send_message(sender, "**Invalid Link! .**")
-                link_ = link.split("?single")[0]
 		datas = message.text.split("/")
-		temp = datas[-1].replace("?single","").split("-")
+	return	temp = datas[-1].replace("?single","").split("-")
 		fromID = int(temp[0].strip())
 		try: toID = int(temp[1].strip())
 		except: toID = fromID
