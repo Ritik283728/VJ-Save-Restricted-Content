@@ -90,11 +90,14 @@ def save(client: pyrogram.client.Client, message: pyrogram.types.messages_and_me
 			bot.send_message(message.chat.id,"**Chat alredy Joined**", reply_to_message_id=message.id)
 		except InviteHashExpired:
 			bot.send_message(message.chat.id,"**Invalid Link**", reply_to_message_id=message.id)
-			
-			return client.send_message
+
 	# getting message
 	elif "https://t.me/" in message.text:
 
+		except ValueError:
+                if '?single' not in link:
+                    return await client.send_message(sender, "**Invalid Link! .**")
+                link_ = link.split("?single")[0]
 		datas = message.text.split("/")
 		temp = datas[-1].replace("?single","").split("-")
 		fromID = int(temp[0].strip())
