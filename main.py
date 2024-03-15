@@ -95,7 +95,7 @@ def save(client: pyrogram.client.Client, message: pyrogram.types.messages_and_me
 	elif "https://t.me/" in message.text:
 
 		datas = message.text.split("/")
-	return	temp = datas[-1].replace("?single","").split("-")
+		temp = datas[-1].replace("?single","").split("-")
 		fromID = int(temp[0].strip())
 		try: toID = int(temp[1].strip())
 		except: toID = fromID
