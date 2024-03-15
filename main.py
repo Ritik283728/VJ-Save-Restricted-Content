@@ -65,8 +65,8 @@ def a(current, total, message, type):
 # start command
 @bot.on_message(filters.command(["start"]))
 def send_start(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
-	bot.send_message(message.chat.id, f"**__👋 Hi** **{message.from_user.mention}**, **I am Save Restricted Bot, I can send you restricted content by it's post link__**\n\n")
-	#reply_markup=InlineKeyboardMarkup([[ InlineKeyboardButton("🌐 Update Channel", url="https://t.me/VJ_Botz")]]), reply_to_message_id=message.id)
+	bot.send_message(message.chat.id, f"**__👋 Hi** **{message.from_user.mention}**\n, **I am Save Restricted Bot, I can send you restricted content by it's post link__**\n\n{USAGE}")
+	reply_markup=InlineKeyboardMarkup([[ InlineKeyboardButton("🌐 Update Channel", url="https://t.me/VJ_Botz")]]), reply_to_message_id=message.id)
 
 
 @bot.on_message(filters.text)
@@ -115,7 +115,7 @@ def save(client: pyrogram.client.Client, message: pyrogram.types.messages_and_me
 				except MessageEmpty as e:
 					bot.send_message(message.chat.id,f"**Caught a message empty exception** : __{e}__", reply_to_message_id=message.id)
 					continue
-				except pyrogram.errors.exceptions.TelegramError as e:
+				except Exception  as e:
 					bot.send_message(message.chat.id,f"**Caught a TelegramErrorException** : __{e}__", reply_to_message_id=message.id)
 					continue
 				#handle_private(message,chatid,msgid)
@@ -255,14 +255,14 @@ def get_message_type(msg: pyrogram.types.messages_and_media.message.Message):
 	except: pass
 
 
-# USAGE = """**FOR PUBLIC CHATS**
+USAGE = """**FOR PUBLIC CHATS**
 
-# **__just send post/s link__**
+**__just send post/s link__**
 
-# **FOR PRIVATE CHATS**
+**FOR PRIVATE CHATS**
 
-# **__first send invite link of the chat (unnecessary if the account of string session already member of the chat)
-# then send post/s link__**
+**__first send invite link of the chat (unnecessary if the account of string session already member of the chat)
+then send post/s link__**
 
 # **FOR BOT CHATS**
 
