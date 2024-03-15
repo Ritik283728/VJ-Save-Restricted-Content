@@ -91,7 +91,6 @@ def save(client: pyrogram.client.Client, message: pyrogram.types.messages_and_me
 		except InviteHashExpired:
 			bot.send_message(message.chat.id,"**Invalid Link**", reply_to_message_id=message.id)
 
-	                         return
 	# getting message
 	elif "https://t.me/" in message.text:
 
