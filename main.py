@@ -155,7 +155,7 @@ def handle_private(message: pyrogram.types.messages_and_media.message.Message, c
 		msg: pyrogram.types.messages_and_media.message.Message = acc.get_messages(chatid,msgid)
 		msg_type = get_message_type(msg)
 
-	#	if "Text" == msg_type:
+		if "Text" == msg_type: 
 			bot.send_message(message.chat.id, msg.text, entities=msg.entities, reply_to_message_id=message.id)
 			return
 
