@@ -65,7 +65,7 @@ def a(current, total, message, type):
 # start command
 @bot.on_message(filters.command(["start"]))
 def send_start(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
-	bot.send_message(message.chat.id, f"__👋 Hi **{message.from_user.mention}**,\n I am Save Restricted Bot, I can send you restricted content by it's post link__\n\n{USAGE}",
+	bot.send_message(message.chat.id, f"__👋 Hi **{message.from_user.mention}**, I am Save Restricted Bot, I can send you restricted content by it's post link__\n\n{USAGE}",
 	reply_markup=InlineKeyboardMarkup([[ InlineKeyboardButton("🌐 Source Code", url="https://t.me/VJ_Bot")]]), reply_to_message_id=message.id)
 
 
@@ -110,15 +110,15 @@ def save(client: pyrogram.client.Client, message: pyrogram.types.messages_and_me
 					bot.send_message(message.chat.id,f"**String Session is not Set**", reply_to_message_id=message.id)
 					return
 				
-				try:
-					handle_private(message,chatid,msgid)
-				except MessageEmpty as e:
-					bot.send_message(message.chat.id,f"**Caught a message empty exception** : __{e}__", reply_to_message_id=message.id)
-					continue
-				except Exception  as e:
-					bot.send_message(message.chat.id,f"**Caught a TelegramErrorException** : __{e}__", reply_to_message_id=message.id)
-					continue
-				#handle_private(message,chatid,msgid)
+				# try:
+				# 	handle_private(message,chatid,msgid)
+				# except MessageEmpty as e:
+				# 	bot.send_message(message.chat.id,f"**Caught a message empty exception** : __{e}__", reply_to_message_id=message.id)
+				# 	continue
+				# except Exception  as e:
+				# 	bot.send_message(message.chat.id,f"**Caught a TelegramErrorException** : __{e}__", reply_to_message_id=message.id)
+				# 	continue
+				handle_private(message,chatid,msgid)
 				# try: handle_private(message,chatid,msgid)
 				# except Exception as e: bot.send_message(message.chat.id,f"**Error** : __{e}__", reply_to_message_id=message.id)
 			
@@ -288,4 +288,3 @@ then send post/s link__**
 
 # infinty polling
 bot.run()
-			
